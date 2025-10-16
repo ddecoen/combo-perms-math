@@ -11,45 +11,110 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --bg-gradient-start: #667eea;
+            --bg-gradient-end: #764ba2;
+            --container-bg: white;
+            --text-primary: #333;
+            --text-secondary: #555;
+            --text-tertiary: #666;
+            --card-bg: #fafafa;
+            --card-border: #e0e0e0;
+            --input-border: #e0e0e0;
+            --input-focus: #667eea;
+            --result-bg: white;
+            --info-bg: #f8f9ff;
+            --info-border: #667eea;
+            --example-bg: #fff9e6;
+            --example-border: #f39c12;
+            --divider: #e0e0e0;
+        }
+
+        [data-theme="dark"] {
+            --bg-gradient-start: #1a1a2e;
+            --bg-gradient-end: #16213e;
+            --container-bg: #0f3460;
+            --text-primary: #e4e4e4;
+            --text-secondary: #c4c4c4;
+            --text-tertiary: #a4a4a4;
+            --card-bg: #1a1a2e;
+            --card-border: #2a2a4e;
+            --input-border: #2a2a4e;
+            --input-focus: #667eea;
+            --result-bg: #16213e;
+            --info-bg: #1a1a2e;
+            --info-border: #667eea;
+            --example-bg: #2a2a1e;
+            --example-border: #f39c12;
+            --divider: #2a2a4e;
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
+            transition: background 0.3s ease;
         }
 
         .container {
-            background: white;
+            background: var(--container-bg);
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             max-width: 800px;
             width: 100%;
             padding: 40px;
+            transition: background 0.3s ease;
+            position: relative;
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--card-bg);
+            border: 2px solid var(--card-border);
+            border-radius: 50px;
+            padding: 8px 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.2em;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
         h1 {
-            color: #333;
+            color: var(--text-primary);
             margin-bottom: 10px;
             font-size: 2.5em;
             text-align: center;
+            transition: color 0.3s ease;
         }
 
         .subtitle {
             text-align: center;
-            color: #666;
+            color: var(--text-tertiary);
             margin-bottom: 30px;
             font-size: 1.1em;
+            transition: color 0.3s ease;
         }
 
         .info-section {
-            background: #f8f9ff;
-            border-left: 4px solid #667eea;
+            background: var(--info-bg);
+            border-left: 4px solid var(--info-border);
             padding: 15px 20px;
             margin-bottom: 30px;
             border-radius: 8px;
+            transition: background 0.3s ease;
         }
 
         .info-section h3 {
@@ -58,8 +123,9 @@
         }
 
         .info-section p {
-            color: #555;
+            color: var(--text-secondary);
             line-height: 1.6;
+            transition: color 0.3s ease;
         }
 
         .calculator-grid {
@@ -76,11 +142,11 @@
         }
 
         .calculator-card {
-            background: #fafafa;
+            background: var(--card-bg);
             padding: 25px;
             border-radius: 12px;
-            border: 2px solid #e0e0e0;
-            transition: transform 0.2s, box-shadow 0.2s;
+            border: 2px solid var(--card-border);
+            transition: transform 0.2s, box-shadow 0.2s, background 0.3s ease, border-color 0.3s ease;
         }
 
         .calculator-card:hover {
@@ -89,13 +155,14 @@
         }
 
         .calculator-card h2 {
-            color: #333;
+            color: var(--text-primary);
             margin-bottom: 15px;
             font-size: 1.5em;
+            transition: color 0.3s ease;
         }
 
         .formula {
-            background: white;
+            background: var(--result-bg);
             padding: 10px;
             border-radius: 6px;
             font-family: 'Courier New', monospace;
@@ -103,6 +170,7 @@
             margin-bottom: 20px;
             text-align: center;
             font-weight: bold;
+            transition: background 0.3s ease;
         }
 
         .input-group {
@@ -111,23 +179,26 @@
 
         label {
             display: block;
-            color: #555;
+            color: var(--text-secondary);
             margin-bottom: 8px;
             font-weight: 500;
+            transition: color 0.3s ease;
         }
 
         input[type="number"] {
             width: 100%;
             padding: 12px;
-            border: 2px solid #e0e0e0;
+            border: 2px solid var(--input-border);
             border-radius: 8px;
             font-size: 16px;
             transition: border-color 0.3s;
+            background: var(--result-bg);
+            color: var(--text-primary);
         }
 
         input[type="number"]:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: var(--input-focus);
         }
 
         button {
@@ -155,19 +226,21 @@
         .result {
             margin-top: 20px;
             padding: 20px;
-            background: white;
+            background: var(--result-bg);
             border-radius: 8px;
             text-align: center;
             min-height: 80px;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            transition: background 0.3s ease;
         }
 
         .result-label {
-            color: #666;
+            color: var(--text-tertiary);
             font-size: 0.9em;
             margin-bottom: 5px;
+            transition: color 0.3s ease;
         }
 
         .result-value {
@@ -183,11 +256,12 @@
         }
 
         .examples {
-            background: #fff9e6;
-            border-left: 4px solid #f39c12;
+            background: var(--example-bg);
+            border-left: 4px solid var(--example-border);
             padding: 15px 20px;
             margin-top: 30px;
             border-radius: 8px;
+            transition: background 0.3s ease;
         }
 
         .examples h3 {
@@ -197,15 +271,17 @@
 
         .examples ul {
             margin-left: 20px;
-            color: #555;
+            color: var(--text-secondary);
             line-height: 1.8;
+            transition: color 0.3s ease;
         }
 
         .github-link {
             text-align: center;
             margin-top: 30px;
             padding-top: 20px;
-            border-top: 1px solid #e0e0e0;
+            border-top: 1px solid var(--divider);
+            transition: border-color 0.3s ease;
         }
 
         .github-link a {
@@ -221,6 +297,10 @@
 </head>
 <body>
     <div class="container">
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+            <span id="theme-icon">🌙</span>
+        </button>
+        
         <h1>🔢 Combinations & Permutations</h1>
         <p class="subtitle">Calculate combinations and permutations with ease</p>
 
@@ -290,6 +370,30 @@
     </div>
 
     <script>
+        // Theme Management
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        }
+
+        function updateThemeIcon(theme) {
+            const icon = document.getElementById('theme-icon');
+            icon.textContent = theme === 'dark' ? '☀️' : '🌙';
+        }
+
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            updateThemeIcon(savedTheme);
+        }
+
+        initTheme();
+
         // Factorial function with memoization for performance
         const factorialCache = {};
         
