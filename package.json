@@ -1,0 +1,23 @@
+{
+  "name": "combo-perms-math",
+  "version": "1.0.0",
+  "description": "A web calculator for combinations and permutations",
+  "main": "index.html",
+  "scripts": {
+    "dev": "python3 -m http.server 8000",
+    "deploy": "vercel --prod"
+  },
+  "keywords": [
+    "combinations",
+    "permutations",
+    "calculator",
+    "math",
+    "statistics"
+  ],
+  "author": "ddecoen",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ddecoen/combo-perms-math"
+  }
+}

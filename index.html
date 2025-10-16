@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Combinations & Permutations Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            text-align: center;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .info-section {
+            background: #f8f9ff;
+            border-left: 4px solid #667eea;
+            padding: 15px 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+
+        .info-section h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .info-section p {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .calculator-card {
+            background: #fafafa;
+            padding: 25px;
+            border-radius: 12px;
+            border: 2px solid #e0e0e0;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .calculator-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .calculator-card h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .formula {
+            background: white;
+            padding: 10px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            color: #667eea;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            color: #555;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            text-align: center;
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .result-label {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .result-value {
+            color: #667eea;
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .error {
+            color: #e74c3c;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .examples {
+            background: #fff9e6;
+            border-left: 4px solid #f39c12;
+            padding: 15px 20px;
+            margin-top: 30px;
+            border-radius: 8px;
+        }
+
+        .examples h3 {
+            color: #f39c12;
+            margin-bottom: 10px;
+        }
+
+        .examples ul {
+            margin-left: 20px;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .github-link {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .github-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .github-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔢 Combinations & Permutations</h1>
+        <p class="subtitle">Calculate combinations and permutations with ease</p>
+
+        <div class="info-section">
+            <h3>Quick Guide</h3>
+            <p><strong>Permutations (Order Matters):</strong> Use when the order of selection is important (e.g., race rankings, passwords)</p>
+            <p><strong>Combinations (Order Doesn't Matter):</strong> Use when only the selection matters (e.g., lottery numbers, team selection)</p>
+        </div>
+
+        <div class="calculator-grid">
+            <!-- Permutations Calculator -->
+            <div class="calculator-card">
+                <h2>Permutations</h2>
+                <div class="formula">P(n, r) = n! / (n - r)!</div>
+                
+                <div class="input-group">
+                    <label for="perm-n">n (total items):</label>
+                    <input type="number" id="perm-n" min="0" placeholder="Enter n" value="">
+                </div>
+
+                <div class="input-group">
+                    <label for="perm-r">r (items to select):</label>
+                    <input type="number" id="perm-r" min="0" placeholder="Enter r" value="">
+                </div>
+
+                <button onclick="calculatePermutation()">Calculate Permutation</button>
+
+                <div class="result" id="perm-result">
+                    <div class="result-label">Result will appear here</div>
+                </div>
+            </div>
+
+            <!-- Combinations Calculator -->
+            <div class="calculator-card">
+                <h2>Combinations</h2>
+                <div class="formula">C(n, r) = n! / (r! × (n - r)!)</div>
+                
+                <div class="input-group">
+                    <label for="comb-n">n (total items):</label>
+                    <input type="number" id="comb-n" min="0" placeholder="Enter n" value="">
+                </div>
+
+                <div class="input-group">
+                    <label for="comb-r">r (items to select):</label>
+                    <input type="number" id="comb-r" min="0" placeholder="Enter r" value="">
+                </div>
+
+                <button onclick="calculateCombination()">Calculate Combination</button>
+
+                <div class="result" id="comb-result">
+                    <div class="result-label">Result will appear here</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="examples">
+            <h3>💡 Example Use Cases</h3>
+            <ul>
+                <li><strong>Permutations:</strong> How many ways can 3 people finish in top 3 positions out of 8 runners? P(8,3) = 336</li>
+                <li><strong>Combinations:</strong> How many ways can you choose 5 lottery numbers from 50? C(50,5) = 2,118,760</li>
+            </ul>
+        </div>
+
+        <div class="github-link">
+            <a href="https://github.com/ddecoen/combo-perms-math" target="_blank">📚 View Documentation on GitHub</a>
+        </div>
+    </div>
+
+    <script>
+        // Factorial function with memoization for performance
+        const factorialCache = {};
+        
+        function factorial(n) {
+            if (n === 0 || n === 1) return 1;
+            if (factorialCache[n]) return factorialCache[n];
+            
+            let result = 1;
+            for (let i = 2; i <= n; i++) {
+                result *= i;
+            }
+            factorialCache[n] = result;
+            return result;
+        }
+
+        // More efficient permutation calculation (doesn't calculate full factorials)
+        function permutation(n, r) {
+            if (r > n) return 0;
+            if (r === 0) return 1;
+            
+            let result = 1;
+            for (let i = n; i > n - r; i--) {
+                result *= i;
+            }
+            return result;
+        }
+
+        // More efficient combination calculation
+        function combination(n, r) {
+            if (r > n) return 0;
+            if (r === 0 || r === n) return 1;
+            
+            // Use symmetry property: C(n,r) = C(n, n-r)
+            r = Math.min(r, n - r);
+            
+            let result = 1;
+            for (let i = 0; i < r; i++) {
+                result *= (n - i);
+                result /= (i + 1);
+            }
+            return Math.round(result);
+        }
+
+        function formatNumber(num) {
+            return num.toLocaleString();
+        }
+
+        function calculatePermutation() {
+            const n = parseInt(document.getElementById('perm-n').value);
+            const r = parseInt(document.getElementById('perm-r').value);
+            const resultDiv = document.getElementById('perm-result');
+
+            // Validation
+            if (isNaN(n) || isNaN(r)) {
+                resultDiv.innerHTML = '<div class="error">Please enter valid numbers for both n and r</div>';
+                return;
+            }
+
+            if (n < 0 || r < 0) {
+                resultDiv.innerHTML = '<div class="error">n and r must be non-negative</div>';
+                return;
+            }
+
+            if (r > n) {
+                resultDiv.innerHTML = `
+                    <div class="result-label">P(${n}, ${r})</div>
+                    <div class="result-value">0</div>
+                    <div class="error">Cannot select more items than available</div>
+                `;
+                return;
+            }
+
+            if (n > 170) {
+                resultDiv.innerHTML = '<div class="error">Number too large (maximum n = 170)</div>';
+                return;
+            }
+
+            const result = permutation(n, r);
+
+            resultDiv.innerHTML = `
+                <div class="result-label">P(${n}, ${r}) =</div>
+                <div class="result-value">${formatNumber(result)}</div>
+            `;
+        }
+
+        function calculateCombination() {
+            const n = parseInt(document.getElementById('comb-n').value);
+            const r = parseInt(document.getElementById('comb-r').value);
+            const resultDiv = document.getElementById('comb-result');
+
+            // Validation
+            if (isNaN(n) || isNaN(r)) {
+                resultDiv.innerHTML = '<div class="error">Please enter valid numbers for both n and r</div>';
+                return;
+            }
+
+            if (n < 0 || r < 0) {
+                resultDiv.innerHTML = '<div class="error">n and r must be non-negative</div>';
+                return;
+            }
+
+            if (r > n) {
+                resultDiv.innerHTML = `
+                    <div class="result-label">C(${n}, ${r})</div>
+                    <div class="result-value">0</div>
+                    <div class="error">Cannot select more items than available</div>
+                `;
+                return;
+            }
+
+            if (n > 1000) {
+                resultDiv.innerHTML = '<div class="error">Number too large (maximum n = 1000)</div>';
+                return;
+            }
+
+            const result = combination(n, r);
+
+            resultDiv.innerHTML = `
+                <div class="result-label">C(${n}, ${r}) =</div>
+                <div class="result-value">${formatNumber(result)}</div>
+            `;
+        }
+
+        // Allow Enter key to trigger calculation
+        document.getElementById('perm-n').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') calculatePermutation();
+        });
+        document.getElementById('perm-r').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') calculatePermutation();
+        });
+        document.getElementById('comb-n').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') calculateCombination();
+        });
+        document.getElementById('comb-r').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') calculateCombination();
+        });
+    </script>
+</body>
+</html>
